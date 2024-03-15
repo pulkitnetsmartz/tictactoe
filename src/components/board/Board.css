@@ -1,0 +1,17 @@
+.board{
+    display: grid;
+    grid-template-columns: repeat(3,6rem);
+    grid-template-rows: repeat(3, 6rem);
+    place-items: center;
+    justify-content: center;
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+    .board {
+        grid-template-columns: repeat(3, 6rem); /* Adjust column width for smaller screens */
+        grid-template-rows: repeat(3, 6rem); /* Adjust row height for smaller screens */
+        height: auto;
+        width: auto;
+    }
+}
