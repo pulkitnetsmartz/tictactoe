@@ -1,5 +1,5 @@
 # Use an official Node.js runtime as the base image
-FROM node:14-alpine
+FROM node:14-alpine as builder
 
 # Set the working directory in the container
 WORKDIR /app
@@ -16,8 +16,11 @@ COPY . .
 # Build the React app
 RUN npm run build
 
-# Expose port 3000 to the outside world
-EXPOSE 3000
+# Use a lightweight Nginx image as a final stage
+FROM nginx
 
-# Define the command to run the application when the container starts
-CMD ["npm", "start", "dev"]
+# Expose port 80 to the outside world
+EXPOSE 80
+
+# Copy the build output from the previous stage to the nginx public directory
+COPY --from=builder /app/build /usr/share/nginx/html
