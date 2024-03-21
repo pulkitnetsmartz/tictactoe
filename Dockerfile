@@ -1,5 +1,5 @@
 # Use an official Node.js runtime as the base image
-FROM node:14-alpine as builder
+FROM node:18-alpine as builder
 
 # Set the working directory in the container
 WORKDIR /app
@@ -7,14 +7,8 @@ WORKDIR /app
 # Copy package.json and package-lock.json (if present) to the working directory
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application code to the working directory
-COPY . .
-
-# Build the React app
-RUN npm run build
+# Install dependencies and build the React app
+RUN npm install && npm run build
 
 # Use a lightweight Nginx image as a final stage
 FROM nginx
